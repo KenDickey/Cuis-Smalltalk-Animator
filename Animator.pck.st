@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3724] on 5 May 2019 at 2:23:02 pm'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3725] on 5 May 2019 at 10:02:17 pm'!
 'Description Simple animation for random Morph instances'!
-!provides: 'Animator' 1 17!
+!provides: 'Animator' 1 19!
 !requires: 'Graphics-Files-Additional' 1 22 nil!
 !requires: 'Cuis-Base' 50 3724 nil!
 SystemOrganization addCategory: #Animator!
@@ -365,7 +365,7 @@ bouncingBallExample    "Bounces off walls of container"
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'KenD 2/27/2015 15:14'!
+!Animator class methodsFor: 'examples' stamp: 'KenD 5/5/2019 21:58:16'!
 colorCyclingExample  "Color Cycling"
 "
 	self colorCyclingExample.  
@@ -374,7 +374,7 @@ colorCyclingExample  "Color Cycling"
 	morph := BorderedRectMorph initializedInstance.
 	morph borderWidth: 6;
 		      morphPosition: 100@200.
-	colors := { Color green. Color lightGreen. Color brightGreen. Color forestGreen.  }.
+	colors := { Color green. Color red. Color blue. Color yellow.  }.
 	animator :=  
 		Animator actor: morph 
 					   action: (Animator cycleColors: colors 
@@ -468,14 +468,14 @@ imageCyclingExample
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'KenD 5/5/2019 13:32:50'!
+!Animator class methodsFor: 'examples' stamp: 'KenD 5/5/2019 22:02:04'!
 moveMorphExample
 	"Nota Bene: Asynchronous"
 "
 	Animator moveMorphExample.
 "
 	Animator 
-		slide: (BorderedImageMorph initializedInstance openInWorld) 
+		slide: (ImageMorph initializedInstance openInWorld) 
 		from: (10@10) "Origin initially at 0@0"
 		to: (200@400)
 		nSteps: 10
@@ -552,16 +552,21 @@ slide: aMorph from: startPoint to: endPoint nSteps: numberOfMoveSteps delay: mil
 						doneProc: (Animator doneAfterNTimes: numberOfMoveSteps).
 	animator startStepping.! !
 
-!Animator class methodsFor: 'class initialization' stamp: 'KenD 5/5/2019 13:29:23'!
+!Animator class methodsFor: 'class initialization' stamp: 'KenD 5/5/2019 21:53:32'!
 initialize
 "
 	Animator initialize.
 "
+	| filePrefix |
+	
+	filePrefix := (CodePackage installedPackages at: #'Animator')
+		fullFileName pathAndLocalName at: 1.
+	
 	ButterflyForms := Array new: 15.
 	1 to: 9 do: [ :n | ButterflyForms 
 		at: n 
-		put: (Form fromFileNamed: 'BlueButterfly/b0', n asString, '.png')].
+		put: (Form fromFileNamed: filePrefix, '/BlueButterfly/b0', n asString, '.png')].
 	10 to: 15 do: [ :n | ButterflyForms 
 		at: n 
-		put: (Form fromFileNamed: 'BlueButterfly/b', n asString, '.png')]! !
+		put: (Form fromFileNamed: filePrefix, '/BlueButterfly/b', n asString, '.png')]! !
 Animator initialize!
