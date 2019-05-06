@@ -5,7 +5,7 @@ Simple Morph Animations
 	Feature require: 'Animator'
 	Animator imageCyclingExample.
 	Animator bouncingBallExample.
-	Animator pathLoopExample.
+	Animator composedActionExample1.
 ````
 
 Use Browser to look at other class side examples.
