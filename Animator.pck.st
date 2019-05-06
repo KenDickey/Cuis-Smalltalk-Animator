@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3729] on 6 May 2019 at 3:38:52 pm'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3725] on 6 May 2019 at 10:35:52 am'!
 'Description Simple animation for random Morph instances'!
-!provides: 'Animator' 1 20!
-!requires: 'Graphics-Files-Additional' 1 22 nil!
+!provides: 'Animator' 1 21!
 !requires: 'Cuis-Base' 50 3724 nil!
+!requires: 'Graphics-Files-Additional' 1 22 nil!
 SystemOrganization addCategory: #Animator!
 
 
@@ -123,13 +123,16 @@ world
 	
 	^ nil ! !
 
-!Animator methodsFor: 'initialize-release' stamp: 'KenD 2/27/2015 15:07'!
+!Animator methodsFor: 'initialize-release' stamp: 'KenD 5/6/2019 10:35:17'!
 actor: aMorph action: aOneArgClosure stepTime: milllisecondsBetweenSteps
 
-	^self actor: aMorph
-	       action: aOneArgClosure
-	       stepTime: milllisecondsBetweenSteps
-	       doneProc: [ :iaMorph | false ]  "never done -> loops continuously"! !
+	self actor: aMorph;
+	      action: aOneArgClosure;
+	      stepTime: milllisecondsBetweenSteps;
+		 doneProc: [ :iaMorph | false ].  "never done -> loops continuously"
+	aMorph setProperty: #animator toValue: self.
+	^self
+! !
 
 !Animator methodsFor: 'initialize-release' stamp: 'KenD 5/6/2019 14:58:28'!
 actor: aMorph action: oneArgClosure stepTime: milllisecondsBetweenSteps doneProc: predicateClosure
