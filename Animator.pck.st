@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3725] on 5 May 2019 at 10:02:17 pm'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3729] on 6 May 2019 at 3:38:52 pm'!
 'Description Simple animation for random Morph instances'!
-!provides: 'Animator' 1 19!
+!provides: 'Animator' 1 20!
 !requires: 'Graphics-Files-Additional' 1 22 nil!
 !requires: 'Cuis-Base' 50 3724 nil!
 SystemOrganization addCategory: #Animator!
@@ -131,14 +131,16 @@ actor: aMorph action: aOneArgClosure stepTime: milllisecondsBetweenSteps
 	       stepTime: milllisecondsBetweenSteps
 	       doneProc: [ :iaMorph | false ]  "never done -> loops continuously"! !
 
-!Animator methodsFor: 'initialize-release' stamp: 'KenD 2/27/2015 15:22'!
+!Animator methodsFor: 'initialize-release' stamp: 'KenD 5/6/2019 14:58:28'!
 actor: aMorph action: oneArgClosure stepTime: milllisecondsBetweenSteps doneProc: predicateClosure
 
 	self actor: aMorph;
 	      action: oneArgClosure;
 	      stepTime: milllisecondsBetweenSteps;
-		 doneProc: predicateClosure;
-	      yourself! !
+		 doneProc: predicateClosure.
+	aMorph setProperty: #animator toValue: self.
+	^self
+	! !
 
 !Animator methodsFor: 'stepping' stamp: 'jmv 5/14/2015 17:32'!
 isStepping
@@ -185,15 +187,22 @@ actor: aMorph action: aOneArgClosure
 
 	^ self new actor: aMorph action: aOneArgClosure stepTime: self defaultStepTime ! !
 
-!Animator class methodsFor: 'instance creation' stamp: 'KenD 2/27/2015 15:25'!
+!Animator class methodsFor: 'instance creation' stamp: 'KenD 5/6/2019 14:55:20'!
 actor: aMorph action: aOneArgClosure stepTime: milllisecondsBetweenSteps
 
 	^ self new actor: aMorph action: aOneArgClosure stepTime: milllisecondsBetweenSteps doneProc: self alwaysFalse! !
 
-!Animator class methodsFor: 'instance creation' stamp: 'KenD 2/27/2015 15:23'!
+!Animator class methodsFor: 'instance creation' stamp: 'KenD 5/6/2019 14:49:54'!
 actor: aMorph action: aOneArgClosure stepTime: milllisecondsBetweenSteps doneProc: predicateClosure
 
-	^ self new actor: aMorph action: aOneArgClosure stepTime: milllisecondsBetweenSteps doneProc: predicateClosure! !
+	| newInst |
+	newInst := self new actor: aMorph 
+					action: aOneArgClosure 
+					stepTime: milllisecondsBetweenSteps 
+					doneProc: predicateClosure.
+	"animator property allows access through Morph and keeps instance from GC"
+	aMorph setProperty: #animator toValue: newInst.
+	^newInst ! !
 
 !Animator class methodsFor: 'doneTestProc' stamp: 'KenD 2/27/2015 15:24'!
 alwaysFalse
