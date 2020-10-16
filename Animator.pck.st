@@ -1,18 +1,18 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3725] on 6 May 2019 at 10:35:52 am'!
+'From Cuis 5.0 [latest update: #4413] on 16 October 2020 at 3:34:22 pm'!
 'Description Simple animation for random Morph instances'!
-!provides: 'Animator' 1 21!
-!requires: 'Cuis-Base' 50 3724 nil!
+!provides: 'Animator' 1 22!
+!requires: 'Cuis-Base' 50 4413 nil!
 !requires: 'Graphics-Files-Additional' 1 22 nil!
-SystemOrganization addCategory: #Animator!
+SystemOrganization addCategory: 'Animator'!
 
 
-!classDefinition: #Animator category: #Animator!
+!classDefinition: #Animator category: 'Animator'!
 Object subclass: #Animator
 	instanceVariableNames: 'actor action stepTime doneProc stepping'
 	classVariableNames: 'Animators ButterflyForms'
 	poolDictionaries: ''
 	category: 'Animator'!
-!classDefinition: 'Animator class' category: #Animator!
+!classDefinition: 'Animator class' category: 'Animator'!
 Animator class
 	instanceVariableNames: ''!
 
@@ -377,13 +377,13 @@ bouncingBallExample    "Bounces off walls of container"
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'KenD 5/5/2019 21:58:16'!
+!Animator class methodsFor: 'examples' stamp: 'KenD 10/16/2020 15:32:18'!
 colorCyclingExample  "Color Cycling"
 "
 	self colorCyclingExample.  
 "
 	| morph colors animator |
-	morph := BorderedRectMorph initializedInstance.
+	morph := WidgetMorph initializedInstance.
 	morph borderWidth: 6;
 		      morphPosition: 100@200.
 	colors := { Color green. Color red. Color blue. Color yellow.  }.
@@ -396,7 +396,7 @@ colorCyclingExample  "Color Cycling"
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'KenD 2/26/2015 14:50'!
+!Animator class methodsFor: 'examples' stamp: 'KenD 10/16/2020 15:32:32'!
 composedActionExample1  "Compose actions:  grow&shring + path"
 "
 	self composedActionExample1.  
@@ -404,7 +404,7 @@ composedActionExample1  "Compose actions:  grow&shring + path"
 	Animator stopStepping.
 "
 	| morph actions animator |
-	morph := BorderedRectMorph initializedInstance.
+	morph := WidgetMorph initializedInstance.
 	morph morphPosition: 120@120;
 	 		 openInWorld.
 	actions := { 
@@ -445,7 +445,7 @@ composedActionExample2  "Compose actions -- alternative:  grow&shring + path"
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'KenD 5/13/2015 14:07'!
+!Animator class methodsFor: 'examples' stamp: 'KenD 10/16/2020 15:32:49'!
 growAndShrinkExample    "Grow &Shrink"
 "
 	self growAndShrinkExample.
@@ -453,7 +453,7 @@ growAndShrinkExample    "Grow &Shrink"
 	Animator stopStepping.
 "
 	| morph animator |
-	morph := BorderedRectMorph initializedInstance openInWorld.
+	morph := WidgetMorph initializedInstance openInWorld.
 	morph morphPosition: 200 @ 100.
 	animator := Animator
 						 actor: morph 
