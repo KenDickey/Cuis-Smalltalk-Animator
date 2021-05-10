@@ -1,7 +1,8 @@
-'From Cuis 5.0 [latest update: #4413] on 16 October 2020 at 3:34:22 pm'!
+'From Cuis 5.0 [latest update: #4589] on 10 May 2021 at 11:40:12 am'!
 'Description Simple animation for random Morph instances'!
-!provides: 'Animator' 1 22!
+!provides: 'Animator' 1 23!
 !requires: 'Cuis-Base' 50 4413 nil!
+!requires: 'Morphic-Misc1' 1 175 nil!
 !requires: 'Graphics-Files-Additional' 1 22 nil!
 SystemOrganization addCategory: 'Animator'!
 
@@ -77,10 +78,11 @@ The terms described in the above link have precedence over the terms described
 in the present document. In case of disagreement, the Creative Commons Attribution 4.0 Terms of Use will prevail.
 -------------------!
 
-!Animator methodsFor: 'accessing' stamp: 'KenD 9/20/2013 04:53'!
+!Animator methodsFor: 'accessing' stamp: 'KenD 5/10/2021 11:39:56'!
 action
 
-	^ action! !
+	"Add a guard for un-owned Morphs"
+	^ [ :aMorph | aMorph ifNotNil: [ aMorph owner ifNotNil: [action value: aMorph]]]! !
 
 !Animator methodsFor: 'accessing' stamp: 'KenD 9/20/2013 04:53'!
 action: aOneArgClosure
