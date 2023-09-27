@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4589] on 10 May 2021 at 11:40:12 am'!
+'From Cuis 6.0 [latest update: #5991] on 27 September 2023 at 4:38:12 pm'!
 'Description Simple animation for random Morph instances'!
-!provides: 'Animator' 1 23!
+!provides: 'Animator' 1 24!
 !requires: 'Cuis-Base' 50 4413 nil!
 !requires: 'Morphic-Misc1' 1 175 nil!
 !requires: 'Graphics-Files-Additional' 1 22 nil!
@@ -379,13 +379,13 @@ bouncingBallExample    "Bounces off walls of container"
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'KenD 10/16/2020 15:32:18'!
+!Animator class methodsFor: 'examples' stamp: 'mnqpr 9/27/2023 16:36:55'!
 colorCyclingExample  "Color Cycling"
 "
 	self colorCyclingExample.  
 "
 	| morph colors animator |
-	morph := WidgetMorph initializedInstance.
+	morph := BoxedMorph initializedInstance.
 	morph borderWidth: 6;
 		      morphPosition: 100@200.
 	colors := { Color green. Color red. Color blue. Color yellow.  }.
@@ -398,7 +398,7 @@ colorCyclingExample  "Color Cycling"
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'KenD 10/16/2020 15:32:32'!
+!Animator class methodsFor: 'examples' stamp: 'mnqpr 9/27/2023 16:37:04'!
 composedActionExample1  "Compose actions:  grow&shring + path"
 "
 	self composedActionExample1.  
@@ -406,7 +406,7 @@ composedActionExample1  "Compose actions:  grow&shring + path"
 	Animator stopStepping.
 "
 	| morph actions animator |
-	morph := WidgetMorph initializedInstance.
+	morph := BoxedMorph initializedInstance.
 	morph morphPosition: 120@120;
 	 		 openInWorld.
 	actions := { 
@@ -447,7 +447,7 @@ composedActionExample2  "Compose actions -- alternative:  grow&shring + path"
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'KenD 10/16/2020 15:32:49'!
+!Animator class methodsFor: 'examples' stamp: 'mnqpr 9/27/2023 16:37:17'!
 growAndShrinkExample    "Grow &Shrink"
 "
 	self growAndShrinkExample.
@@ -455,7 +455,7 @@ growAndShrinkExample    "Grow &Shrink"
 	Animator stopStepping.
 "
 	| morph animator |
-	morph := WidgetMorph initializedInstance openInWorld.
+	morph := BoxedMorph initializedInstance openInWorld.
 	morph morphPosition: 200 @ 100.
 	animator := Animator
 						 actor: morph 
