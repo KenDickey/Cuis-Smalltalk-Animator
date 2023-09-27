@@ -1,19 +1,19 @@
-'From Cuis 6.0 [latest update: #5991] on 27 September 2023 at 4:38:12 pm'!
+'From Cuis 6.0 [latest update: #6034] on 27 September 2023 at 9:51:48 pm'!
 'Description Simple animation for random Morph instances'!
-!provides: 'Animator' 1 24!
-!requires: 'Cuis-Base' 50 4413 nil!
-!requires: 'Morphic-Misc1' 1 175 nil!
+!provides: 'Animator' 1 27!
+!requires: 'Cuis-Base' 60 6034 nil!
+!requires: 'UI-Shapes' 1 37 nil!
 !requires: 'Graphics-Files-Additional' 1 22 nil!
-SystemOrganization addCategory: 'Animator'!
+SystemOrganization addCategory: #Animator!
 
 
-!classDefinition: #Animator category: 'Animator'!
+!classDefinition: #Animator category: #Animator!
 Object subclass: #Animator
 	instanceVariableNames: 'actor action stepTime doneProc stepping'
 	classVariableNames: 'Animators ButterflyForms'
 	poolDictionaries: ''
 	category: 'Animator'!
-!classDefinition: 'Animator class' category: 'Animator'!
+!classDefinition: 'Animator class' category: #Animator!
 Animator class
 	instanceVariableNames: ''!
 
@@ -418,32 +418,6 @@ composedActionExample1  "Compose actions:  grow&shring + path"
 	animator := self actor: morph 
 			  			 action: [ : someMorph | actions do: [ :action | action value: someMorph ] ]
 						stepTime: 200.
-	animator startStepping.
-	^ animator ! !
-
-!Animator class methodsFor: 'examples' stamp: 'KenD 5/13/2015 14:08'!
-composedActionExample2  "Compose actions -- alternative:  grow&shring + path"
-"
-	self composedActionExample2.  
-	
-	Animator stopStepping.
-"
-	| morph originalAction newAction animator |
-	morph := EllipseMorph initializedInstance.
-	morph morphPosition: 120@120;
-	 		 openInWorld.
-			
-	animator := self actor: morph 
-			  			 action: (Animator growShrinkAction: 20 numSteps: 6)
-						 stepTime: 200.
-	"compose actions"
-	originalAction := animator action.
-	newAction := Animator followPathAction: 
-			{ 120@120. 140@126. 180@130. 
-			   190@140. 190@180. 170@200.  140@190.  130@160. 134@140. } .
-	"Update with composed action"
-	animator action: [ :m | originalAction value: m. newAction value: m ].
-	
 	animator startStepping.
 	^ animator ! !
 
