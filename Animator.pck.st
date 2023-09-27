@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #6034] on 27 September 2023 at 9:51:48 pm'!
+'From Cuis 6.0 [latest update: #6034] on 27 September 2023 at 10:33:28 pm'!
 'Description Simple animation for random Morph instances'!
-!provides: 'Animator' 1 27!
+!provides: 'Animator' 1 28!
 !requires: 'Cuis-Base' 60 6034 nil!
 !requires: 'UI-Shapes' 1 37 nil!
 !requires: 'Graphics-Files-Additional' 1 22 nil!
@@ -78,11 +78,15 @@ The terms described in the above link have precedence over the terms described
 in the present document. In case of disagreement, the Creative Commons Attribution 4.0 Terms of Use will prevail.
 -------------------!
 
-!Animator methodsFor: 'accessing' stamp: 'KenD 5/10/2021 11:39:56'!
+!Animator methodsFor: 'accessing' stamp: 'KenD 9/27/2023 22:31:48'!
 action
 
 	"Add a guard for un-owned Morphs"
-	^ [ :aMorph | aMorph ifNotNil: [ aMorph owner ifNotNil: [action value: aMorph]]]! !
+	| actionProc |
+	actionProc := action.  "Extract to avoid inadvertant nested assignment"
+	^ [ :aMorph | aMorph ifNotNil:
+		 [ aMorph owner ifNotNil:
+			 [actionProc value: aMorph]]]! !
 
 !Animator methodsFor: 'accessing' stamp: 'KenD 9/20/2013 04:53'!
 action: aOneArgClosure
@@ -398,7 +402,7 @@ colorCyclingExample  "Color Cycling"
 	animator startStepping.
 	^ animator ! !
 
-!Animator class methodsFor: 'examples' stamp: 'mnqpr 9/27/2023 16:37:04'!
+!Animator class methodsFor: 'examples' stamp: 'KenD 9/27/2023 22:18:35'!
 composedActionExample1  "Compose actions:  grow&shring + path"
 "
 	self composedActionExample1.  
@@ -416,10 +420,39 @@ composedActionExample1  "Compose actions:  grow&shring + path"
 			   190@140. 190@180. 170@200.  140@190.  130@160. 134@140. } .
 			}.
 	animator := self actor: morph 
-			  			 action: [ : someMorph | actions do: [ :action | action value: someMorph ] ]
-						stepTime: 200.
+			  	action: [ : someMorph | actions do: 
+					[ :action | action value: someMorph ] 
+				]
+				stepTime: 200.
 	animator startStepping.
 	^ animator ! !
+
+!Animator class methodsFor: 'examples' stamp: 'KenD 9/27/2023 22:17:35'!
+composedActionExample2  "Compose actions -- alternative:  grow&shring + path"
+"
+	self composedActionExample2.  
+	
+	Animator stopStepping.
+"
+	| morph originalAction newAction animator |
+	morph := EllipseMorph initializedInstance.
+	morph morphPosition: 120@120;
+	 		 openInWorld.
+			
+	animator := self actor: morph 
+			  	 action: (Animator growShrinkAction: 20 numSteps: 6)
+				 stepTime: 200.
+	"compose actions"
+	originalAction := animator action.
+	newAction := Animator followPathAction: 
+			{ 120@120. 140@126. 180@130. 
+			   190@140. 190@180. 170@200.  140@190.  130@160. 134@140. } .
+	"Update with composed action"
+	animator action: [ :m | originalAction value: m. newAction value: m ].
+	
+	animator startStepping.
+	^ animator 
+	! !
 
 !Animator class methodsFor: 'examples' stamp: 'mnqpr 9/27/2023 16:37:17'!
 growAndShrinkExample    "Grow &Shrink"
